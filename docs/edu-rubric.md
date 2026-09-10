@@ -85,7 +85,7 @@ Final = (S + P + C + O) / 4   (pesos iguales)
 
 | # | Criterio | Severidad | Qué buscar |
 |---|----------|-----------|------------|
-| C1 | **Naming inglés** | Major | `obtenerUsuario`, `datosUsuario`, `funcion1`, `temp`, `x` → debe ser `getUserById`, `isValidEmail` |
+| C1 | **Naming inglés (lógica)** | Major | `obtenerUsuario`, `funcion1`, `temp`, `x` → debe ser `getUserById`, `isValidEmail`. **Recomendación**: lógica/identificadores en inglés **obligatorio**, pero **datos de respuesta / strings user-facing** en español **permitido sin deducción** (ej. `return { mensaje: "Todo creado" }` ✅, `datosUsuario` como *valor* de API ✅, `function datosUsuario()` ❌) |
 | C2 | **Función pequeña + SRP** | Major | >50 líneas, >3 params, >2 niveles anidación, hace 3 cosas (`validate+save+notify`) |
 | C3 | **Archivo pequeño** | Major | >250 líneas, sin separación UI/lógica |
 | C4 | **DRY** | Major | mismo fetch/validación copiado 3× |
@@ -128,9 +128,13 @@ Final = (S + P + C + O) / 4   (pesos iguales)
 - **10/10** → `docs/examples/edu-score-10.md` — mismo Todo, pero con todo corregido, anotado deducción por deducción.
 - **~4/10** → `docs/examples/edu-score-04.md` — el repo real `Todo-List-con-TRPC` con deducciones que lo llevan a ~4.
 
-## Flujo para el estudiante
+## Flujo para el estudiante (local-first)
 
-1. **Automático primero**: `npm run edu:lint` + `gitleaks` → si está en verde, base 6/10 antes de review humano.
-2. **Checklist humano**: contar deducciones, aplicar fórmula — sin "feeling".
-3. **1 fix por eje**: no 20 nits; el de mayor impacto con snippet *antes/después*.
-4. **Progreso**: comparar sprint a sprint; al inicio pesa más C+O (aprender), luego S.
+1. **Local primero**: `npm run edu:review` → **indicación** semáforo 🟢/🟡/🔴 + 1 tip por eje (no 0-10). Rápido, sin CI.
+2. **Score completo**: `npm run edu:score -- --full` → 0-10 detallado + `deductions` en `.crisol/results/edu-score.json`. Con `--history` hace append a `.crisol/history/history.ndjson`.
+3. **Automático**: `npm run edu:lint` + `gitleaks` → si está en verde, base 6/10 antes de review humano.
+4. **Checklist humano**: contar deducciones, aplicar fórmula — sin "feeling".
+5. **1 fix por eje**: no 20 nits; el de mayor impacto con snippet *antes/después*.
+6. **Progreso**: `cat .crisol/history/history.ndjson` para sprint a sprint; al inicio pesa más C+O (aprender), luego S. Historial es local (gitignored); muestra `docs/examples/crisol-history.sample.ndjson` como referencia.
+
+> Resultados en `.crisol/` son cache local (ver `.crisol/README.md`). CI solo corre en `main` y `/edu-review` manual (local-first).

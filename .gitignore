@@ -40,9 +40,26 @@ pnpm-debug.log*
 # gitleaks
 .gitleaks/
 
-# edu- artifacts
+# crisol — local cache, never commit (keep skeleton)
+.crisol/cache/*
+.crisol/history/*
+.crisol/grill/*
+.crisol/results/*
+.crisol/tmp/*
+.crisol/*.ndjson
+.crisol/*.log
+!.crisol/cache/.gitkeep
+!.crisol/history/.gitkeep
+!.crisol/grill/.gitkeep
+!.crisol/results/.gitkeep
+!.crisol/tmp/.gitkeep
+!.crisol/README.md
+!.crisol/config.example.json
+
+# edu- artifacts (legacy, keep for migration)
 edu-score.json
 .edu/
+.crisol/*.log
 
 # stray debug files
 console.log*

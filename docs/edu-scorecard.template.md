@@ -31,10 +31,12 @@ PR: #___  Branch: __________  Commit: _______
 - **C**: Fuerza: __________ · Mejora: __________
 - **O**: Fuerza: __________ · Mejora: __________
 
-## Artefactos CI
+## Artefactos (local-first)
 
-- `edu-score.json` subido como artifact: `edu-score.json`
-- Workflows: `edu-ci.yml` (lint+gitleaks) + `edu-review.yml` (comment)
+- Local: `.crisol/results/edu-score.json` (indicación semáforo con `edu:review`, 0-10 con `edu:score -- --full`)
+- Historial local: `.crisol/history/history.ndjson` (append con `--history`, gitignored) — ver `.crisol/README.md`
+- CI artifact (solo si se pide): `.crisol/results/edu-score.json` con `retention-days: 14`
+- Workflows: `edu-ci.yml` (solo `main`) + `edu-review.yml` (`opened` + `/edu-review`)
 
 ---
 

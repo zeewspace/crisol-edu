@@ -1,0 +1,5 @@
+{"timestamp":"2026-09-10T10:00:00.000Z","final":4.5,"grade":"Reprobado","security":6.5,"performance":4,"cleanCode":2.5,"organization":4.5,"deductionsCount":12}
+{"timestamp":"2026-09-10T14:30:00.000Z","final":6.5,"grade":"Aprobado con deuda","security":7,"performance":6,"cleanCode":5.5,"organization":7,"deductionsCount":7}
+{"timestamp":"2026-09-11T09:00:00.000Z","final":7.5,"grade":"Bueno","security":8,"performance":7,"cleanCode":7,"organization":7.5,"deductionsCount":4}
+{"timestamp":"2026-09-12T10:15:00.000Z","final":8.5,"grade":"Bueno","security":8.5,"performance":8,"cleanCode":8.5,"organization":9,"deductionsCount":2}
+{"timestamp":"2026-09-13T16:45:00.000Z","final":9.5,"grade":"Excelente","security":9.5,"performance":9,"cleanCode":9.5,"organization":10,"deductionsCount":0}

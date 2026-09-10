@@ -1,0 +1,7 @@
+{
+  "retentionDays": 14,
+  "historyMode": "local",
+  "historySample": "docs/examples/crisol-history.sample.ndjson",
+  "resultsPath": ".crisol/results/edu-score.json",
+  "historyPath": ".crisol/history/history.ndjson"
+}

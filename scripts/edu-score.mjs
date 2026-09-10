@@ -1,23 +1,33 @@
 #!/usr/bin/env node
-// edu-score.mjs — helper scorer for edu-code-review (advisory)
-// Usage: node ./scripts/edu-score.mjs [--deductions path.json] [--out edu-score.json]
-// If no deductions file, emits a placeholder 0/0/0/0 (CI fills real values).
+// edu-score.mjs — helper scorer for edu-code-review (advisory, local-first)
+// Usage:
+//   node ./scripts/edu-score.mjs                          # indicación semáforo (local, no 0-10)
+//   node ./scripts/edu-score.mjs --full                   # scoring 0-10 completo
+//   node ./scripts/edu-score.mjs --deductions path.json   # con deducciones
+//   node ./scripts/edu-score.mjs --out custom.json        # custom out
+//   node ./scripts/edu-score.mjs --full --history         # append a .crisol/history/history.ndjson
+// Default local-first: out -> .crisol/results/edu-score.json (gitignored)
 
-import { writeFileSync, readFileSync, existsSync } from "node:fs";
+import { writeFileSync, readFileSync, existsSync, mkdirSync, appendFileSync } from "node:fs";
+import { dirname } from "node:path";
 
 const args = process.argv.slice(2);
+const has = (name) => args.includes(name);
 const getArg = (name, def) => {
   const i = args.indexOf(name);
-  return i !== -1 && args[i + 1] ? args[i + 1] : def;
+  return i !== -1 && args[i + 1] && !args[i + 1].startsWith("--") ? args[i + 1] : def;
 };
 
 const deductionsPath = getArg("--deductions", null);
-const outPath = getArg("--out", "edu-score.json");
+const outPath = getArg("--out", ".crisol/results/edu-score.json");
+const fullMode = has("--full");
+const historyFlag = getArg("--history", has("--history") ? ".crisol/history/history.ndjson" : null);
 
 let deductions = [];
 if (deductionsPath && existsSync(deductionsPath)) {
   try {
     deductions = JSON.parse(readFileSync(deductionsPath, "utf8"));
+    if (!Array.isArray(deductions)) deductions = deductions.deductions || [];
   } catch (e) {
     console.warn(`[edu-score] could not parse ${deductionsPath}: ${e.message}`);
   }
@@ -30,7 +40,6 @@ function scoreFor(category) {
   const minor = cats.filter((d) => d.severity === "Minor").length;
   let s = 10 - critical * 3 - major * 1.5 - minor * 0.5;
   s = Math.max(0, Math.min(10, s));
-  // step 0.5
   s = Math.round(s * 2) / 2;
   return { score: s, critical, major, minor };
 }
@@ -48,6 +57,19 @@ function gradeFor(f) {
   if (f >= 5) return "Aprobado con deuda";
   return "Reprobado";
 }
+function semaforo(f) {
+  if (f >= 7) return "🟢";
+  if (f >= 5) return "🟡";
+  return "🔴";
+}
+function tipFor(cat, score) {
+  if (score >= 9) return "sin deuda — mantené";
+  if (cat === "S") return "revisá validación/zod y secretos";
+  if (cat === "P") return "revisá paginación/batching";
+  if (cat === "C") return "partí funciones, inglés en lógica";
+  if (cat === "O") return "ordená por feature, commits atómicos";
+  return "1 fix por eje";
+}
 
 const result = {
   security: s.score,
@@ -56,18 +78,50 @@ const result = {
   organization: o.score,
   final,
   grade: gradeFor(final),
+  mode: fullMode ? "full" : "indication",
   deductions,
   meta: {
     rubric: "docs/edu-rubric.md",
     skill: "edu-code-review",
-    mode: "advisory",
+    mode: fullMode ? "full" : "indication",
     prefix: "edu-",
+    resultsPath: outPath,
+    historyPath: historyFlag || null,
   },
 };
 
+mkdirSync(dirname(outPath), { recursive: true });
 writeFileSync(outPath, JSON.stringify(result, null, 2));
-console.log(`[edu-score] wrote ${outPath}: Final ${final}/10 — ${result.grade}`);
-console.log(`  S ${s.score} (C×${s.critical} M×${s.major} m×${s.minor})`);
-console.log(`  P ${p.score} (C×${p.critical} M×${p.major} m×${p.minor})`);
-console.log(`  C ${c.score} (C×${c.critical} M×${c.major} m×${c.minor})`);
-console.log(`  O ${o.score} (C×${o.critical} M×${o.major} m×${o.minor})`);
+
+if (historyFlag) {
+  const hp = typeof historyFlag === "string" ? historyFlag : ".crisol/history/history.ndjson";
+  mkdirSync(dirname(hp), { recursive: true });
+  const entry = {
+    timestamp: new Date().toISOString(),
+    final,
+    grade: result.grade,
+    security: s.score,
+    performance: p.score,
+    cleanCode: c.score,
+    organization: o.score,
+    deductionsCount: deductions.length,
+  };
+  appendFileSync(hp, JSON.stringify(entry) + "\n");
+  console.log(`[edu-score] appended history → ${hp}`);
+}
+
+if (fullMode) {
+  console.log(`[edu-score] wrote ${outPath}: Final ${final}/10 — ${result.grade} ${semaforo(final)}`);
+  console.log(`  S ${s.score} (C×${s.critical} M×${s.major} m×${s.minor}) — ${tipFor("S", s.score)}`);
+  console.log(`  P ${p.score} (C×${p.critical} M×${p.major} m×${p.minor}) — ${tipFor("P", p.score)}`);
+  console.log(`  C ${c.score} (C×${c.critical} M×${c.major} m×${c.minor}) — ${tipFor("C", c.score)}`);
+  console.log(`  O ${o.score} (C×${o.critical} M×${o.major} m×${o.minor}) — ${tipFor("O", o.score)}`);
+} else {
+  // indicación local: semáforo + 1 tip por eje, sin volcar 0-10 si no se pide
+  console.log(`[edu-score] ${semaforo(final)} ${result.grade} — indicación local (usá --full para 0-10)`);
+  console.log(`  S ${semaforo(s.score)} ${tipFor("S", s.score)}`);
+  console.log(`  P ${semaforo(p.score)} ${tipFor("P", p.score)}`);
+  console.log(`  C ${semaforo(c.score)} ${tipFor("C", c.score)}`);
+  console.log(`  O ${semaforo(o.score)} ${tipFor("O", o.score)}`);
+  console.log(`  Detalle completo en ${outPath}`);
+}

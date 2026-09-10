@@ -24,12 +24,13 @@ Required order:
 
 > **Prefijo del dominio: `edu-`**
 > Todo lo de este agente/skills/comandos usa prefijo `edu-` para diferenciarse de skills existentes.
-> - Skill principal: `edu-code-review` → `skill("edu-code-review")` | comando `/edu-review`
-> - Rubric fuente de verdad: `docs/edu-rubric.md`
+> - Skill principal: `edu-code-review` → `skill("edu-code-review")` | comando `/edu-review` | `skill("grilling")` para grill-me
+> - Rubric fuente de verdad: `docs/edu-rubric.md` (versionado, ver `CHANGELOG.md`)
 > - Scorecard template: `docs/edu-scorecard.template.md`
-> - Workflows: `.github/workflows/edu-ci.yml`, `.github/workflows/edu-review.yml`
-> - Scripts npm: `edu:lint`, `edu:review`, `edu:score`
+> - Workflows: `.github/workflows/edu-ci.yml` (solo `main`), `.github/workflows/edu-review.yml` (`opened` + `/edu-review`)
+> - Scripts npm: `edu:lint`, `edu:review` (indicación 🟢/🟡/🔴), `edu:score -- --full`, `edu:grill`
 > - Templates: `edu-comment.md.hbs`, `edu-score.json.hbs`
+> - Resultados: `.crisol/` (local-first, gitignored, ver `.crisol/README.md`)
 > Alias útiles: `work-unit-commits` = `strategic-commit`; `edu-code-review` es el único revisor con scoring 0-10 para este dominio.
 
 ## Rules
@@ -51,12 +52,13 @@ Persona tone governs ONLY your reply text, not artifacts:
 
 ## Language Contract
 
-- **Code identifiers, functions, variables, types, files → English always.**
+- **Code identifiers, functions, variables, types, files → English always (lógica).**
   - Good: `getUserById`, `createTodo`, `isValidEmail`
-  - Bad: `obtenerUsuario`, `datosUsuario`, `funcion1`, `temp`, `x`
+  - Bad: `obtenerUsuario`, `funcion1`, `temp`, `x`
+  - **Excepción recomendada (no penaliza):** datos de respuesta / strings user-facing en español ✅: `return { mensaje: "Todo creado" }`, `datosUsuario` como *valor* de API ✅ — solo se penaliza si es **lógica** (`function datosUsuario()` ❌). Ver `docs/edu-rubric.md#C1`.
 - **Comments → English** (explain *why*, not *what*). Spanish only if domain term requires it and is explicitly requested.
-- **UI copy** → English by default; if project is Spanish-speaking, keep UI consistent but never mix languages in same module (`<html lang="en">` with Spanish content is a bug).
-- **Docs/README** → English unless project explicitly targets Spanish audience (then neutral Spanish).
+- **UI copy** → English by default; si el proyecto es hispanohablante, mantené consistencia pero no mezcles en el mismo módulo (`<html lang="en">` con contenido español es bug). Datos de respuesta en español no penalizan.
+- **Docs/README** → English unless project explicitly targets Spanish audience (then neutral Spanish). Este proyecto (`crisol-edu`) usa español en README por comunidad.
 
 ## Commit Rules — Atomic & Conventional
 
@@ -143,7 +145,7 @@ Closes #12"
 9. **Docs**: cada proyecto necesita `README.md` (qué hace, cómo correr, stack) + `.env.example` (sin secretos).
 10. **Env**: nunca `NEXT_PUBLIC_SECRET_KEY`. Secretos solo server-side, validados con `zod` en `env.ts`.
 
-## Review Workflow — `edu-code-review`
+## Review Workflow — `edu-code-review` (local-first)
 
 Cada PR recibe review **advisory** (nunca bloquea merge) con 4 ejes 0-10:
 - **S Security** (R1 Risk)
@@ -151,11 +153,13 @@ Cada PR recibe review **advisory** (nunca bloquea merge) con 4 ejes 0-10:
 - **C Clean Code** (R2 Readability)
 - **O Organization** (R2 Readability)
 
-**Cómo funciona:**
-1. Abrís PR → `edu-review.yml` dispara `skill("edu-code-review")` (o comentás `/edu-review`).
-2. El agente corre `references/edu-checklist.md` + `eslint` + `gitleaks` + `commitlint`.
-3. Publica comentario `edu-comment.md.hbs` con tabla S/P/C/O, deducciones `file:line` + fix sugerido + link a `docs/edu-rubric.md`.
-4. Sube `edu-score.json` como artifact para CI/dashboards.
+**Cómo funciona (local-first):**
+1. Local: `npm run edu:review` → **indicación** 🟢/🟡/🔴 + 1 tip por eje en 2 seg (sin 0-10). Rápido para el día a día. Detalle completo en `.crisol/results/edu-score.json`.
+2. Score completo: `npm run edu:score -- --full` → 0-10 + deducciones. Con `--history` hace append a `.crisol/history/history.ndjson`.
+3. PR: `edu-review.yml` solo en `opened` + `/edu-review` (no en cada push) dispara `skill("edu-code-review")` si sos OWNER/MEMBER/COLLABORATOR.
+4. El agente corre `references/edu-checklist.md` + `eslint` + `gitleaks` + `commitlint`.
+5. Publica comentario `edu-comment.md.hbs` con tabla S/P/C/O, deducciones `file:line` + fix sugerido + link a `docs/edu-rubric.md`.
+6. Sube `.crisol/results/edu-score.json` como artifact (14 días) — ver `.crisol/README.md`.
 
 **Scoring (ver `docs/edu-rubric.md`):**
 ```
@@ -164,6 +168,7 @@ Final = (S+P+C+O)/4  (pesos iguales)
 Bandas: 9-10 Excelente, 7-8.5 Bueno, 5-6.5 Aprobado con deuda, <5 Reprobado
 ```
 Modo advisory: aunque sea <5, solo educa. No bloquea.
+Propuestas de cambio de rubric → `CHANGELOG.md` + `docs/edu-rubric.md` versionado, decisión comunitaria.
 
 ## Contextual Skill Loading (MANDATORY)
 

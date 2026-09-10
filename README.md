@@ -71,7 +71,7 @@ reuse and reduce page.tsx from 151 to 40 lines."
 git commit -m "este es el primer commit"  # + archivo basura console.log(r.status
 ```
 
-Ver `docs/examples/edu-score-10.md` (10/10) vs `edu-score-04.md` (~4/10) — mismo Todo, lado a lado.
+Ver `docs/examples/edu-score-10.md` (10/10) vs `edu-score-04.md` (~4/10) — mismo Todo, lado a lado. Historial local en `.crisol/history/history.ndjson` (ver `docs/examples/crisol-history.sample.ndjson`).
 
 ---
 
@@ -100,9 +100,10 @@ Cada deducción trae `file:line`, severidad y fix. Ej: `P2 Major server/routers/
 git clone https://github.com/zeewspace/crisol-edu.git
 cd crisol-edu
 npm install
-npx lefthook install   # hooks: commitlint + eslint + gitleaks
+npx lefthook install   # hooks: commitlint + eslint + gitleaks (opcional, CI es fuente de verdad)
 npm run edu:lint       # debe pasar verde
-npm run edu:review     # genera edu-score.json (10/10 si está limpio)
+npm run edu:review     # indicación 🟢/🟡/🔴 + 1 tip por eje (local, 2 seg)
+npm run edu:score -- --full   # 0-10 completo en .crisol/results/edu-score.json
 ```
 
 La skill `edu-code-review` ya viene en `.opencode/skills/edu-code-review` — opencode la detecta como *project skill* sin instalar nada global.
@@ -151,10 +152,12 @@ Alias: `work-unit-commits` = `strategic-commit`.
 
 ---
 
-## Workflows
+## Workflows (local-first)
 
-- **`edu-ci.yml`**: en cada push/PR corre `edu:lint` + `gitleaks` + `commitlint`. Advisory.
-- **`edu-review.yml`**: en `pull_request` o `/edu-review` corre la skill, postea comentario y sube `edu-score.json` como artifact.
+- **`edu-ci.yml`**: solo en `push` a `main` corre `edu:lint` + `gitleaks` + `commitlint`. Advisory. Local es primario.
+- **`edu-review.yml`**: solo en `opened` + `/edu-review` (no en cada push) corre la skill si sos OWNER/MEMBER/COLLABORATOR, postea comentario y sube `.crisol/results/edu-score.json` (14 días).
+
+Resultados locales en `.crisol/` (ver `.crisol/README.md`), no en `main`.
 
 ---
 

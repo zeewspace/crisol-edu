@@ -18,8 +18,8 @@ metadata:
 
 - Explícito: `skill("edu-code-review")`
 - Comando en PR/issue: `/edu-review`
-- Automático: `pull_request` (`opened`, `synchronize`, `reopened`) vía `.github/workflows/edu-review.yml`
-- Manual local: `npm run edu:review` / `npm run edu:score`
+- Automático: `pull_request` (`opened`, `reopened`) vía `.github/workflows/edu-review.yml` (local-first, no `synchronize`) + `/edu-review`
+- Manual local: `npm run edu:review` (indicación 🟢/🟡/🔴) / `npm run edu:score -- --full` (0-10) / `npm run edu:grill`
 
 ## Qué hace (advisory, nunca bloquea)
 
@@ -27,7 +27,7 @@ metadata:
 2. Corre checklist `references/edu-checklist.md` + `eslint` (`eslint.config.mjs`) + `gitleaks` + `commitlint`.
 3. Calcula scoring `references/edu-scoring.md`: `10 - (Critical×3) - (Major×1.5) - (Minor×0.5)` por eje, `Final = (S+P+C+O)/4`.
 4. Publica comentario con `templates/edu-comment.md.hbs` (tabla S/P/C/O, deducciones `file:line` + fix + link a rubric).
-5. Sube `edu-score.json` con `templates/edu-score.json.hbs` como artifact (`edu-score.json`).
+5. Sube `.crisol/results/edu-score.json` con `templates/edu-score.json.hbs` como artifact (14 días, ver `.crisol/README.md`).
 
 ## Cómo invocar
 
@@ -63,7 +63,7 @@ Ver `docs/edu-rubric.md` y `references/edu-checklist.md`.
 ## Salidas
 
 - **Markdown**: `templates/edu-comment.md.hbs` → comentario en PR.
-- **JSON**: `templates/edu-score.json.hbs` / `scripts/edu-score.mjs` → `edu-score.json` `{security, performance, cleanCode, organization, final, grade, deductions[]}`.
+- **JSON**: `templates/edu-score.json.hbs` / `scripts/edu-score.mjs` → `.crisol/results/edu-score.json` + `.crisol/history/history.ndjson` (`--history`) `{security, performance, cleanCode, organization, final, grade, deductions[]}`.
 
 ## Modo advisory
 
