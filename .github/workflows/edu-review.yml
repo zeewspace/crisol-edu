@@ -1,0 +1,92 @@
+name: edu-review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+jobs:
+  edu-review:
+    # Run on PR, or when someone comments /edu-review on a PR
+    if: >
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'issue_comment' &&
+       github.event.issue.pull_request &&
+       contains(github.event.comment.body, '/edu-review'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci || npm install
+
+      - name: Run edu-code-review
+        # skill("edu-code-review") — advisory, never blocks merge
+        run: |
+          echo "::notice::Running edu-code-review (advisory, docs/edu-rubric.md is source of truth)"
+          # 1) eslint (advisory)
+          npm run edu:lint --if-present || echo "edu:lint warnings (advisory)"
+          # 2) gitleaks (advisory)
+          echo "gitleaks: skipped in CI if not installed (see edu-ci.yml for blocking check)"
+          # 3) render score artifacts (placeholder — skill fills real scoring)
+          mkdir -p .edu
+          node ./scripts/edu-score.mjs || echo '{"security":0,"performance":0,"cleanCode":0,"organization":0,"final":0,"grade":"pending","deductions":[]}' > edu-score.json
+          cat edu-score.json || true
+
+      - name: Comment edu-scorecard
+        if: github.event_name == 'pull_request' || contains(github.event.comment.body, '/edu-review')
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let score = { security: 0, performance: 0, cleanCode: 0, organization: 0, final: 0, grade: 'pending', deductions: [] };
+            try { score = JSON.parse(fs.readFileSync('edu-score.json', 'utf8')); } catch {}
+            const body = `## edu-code-review — Scorecard (advisory)
+
+            | Eje | Score |
+            |-----|-------|
+            | **S Security** | ${score.security} /10 |
+            | **P Performance** | ${score.performance} /10 |
+            | **C Clean Code** | ${score.cleanCode} /10 |
+            | **O Organization** | ${score.organization} /10 |
+            | **Final** | **${score.final} /10 — ${score.grade}** |
+
+            > Fuente: \`docs/edu-rubric.md\` · Modo advisory: no bloquea merge · Comando: \`/edu-review\`
+
+            <details><summary>Deducciones</summary>
+
+            \`\`\`json
+            ${JSON.stringify(score.deductions, null, 2)}
+            \`\`\`
+            </details>
+
+            Ver rubric para fixes sugeridos: \`docs/edu-rubric.md\`
+            `;
+            const pr = context.payload.pull_request || context.payload.issue;
+            const prNumber = pr.number || context.issue.number;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body
+            });
+
+      - name: Upload edu-score.json
+        uses: actions/upload-artifact@v4
+        with:
+          name: edu-score.json
+          path: edu-score.json
+          if-no-files-found: warn

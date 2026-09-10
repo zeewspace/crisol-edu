@@ -1,0 +1,48 @@
+# deps
+node_modules/
+.pnp/
+.pnp.js
+
+# build
+.next/
+out/
+build/
+dist/
+coverage/
+
+# env
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+
+# os
+.DS_Store
+Thumbs.db
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ide
+.vscode/
+.idea/
+
+# opencode — keep edu- skill for students, ignore cache
+.opencode/*
+!.opencode/skills
+!.opencode/skills/edu-code-review
+!.opencode/skills/edu-code-review/**
+.atl/
+
+# gitleaks
+.gitleaks/
+
+# edu- artifacts
+edu-score.json
+.edu/
+
+# stray debug files
+console.log*

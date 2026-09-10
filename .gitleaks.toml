@@ -1,0 +1,13 @@
+title = "edu gitleaks config"
+
+[allowlist]
+  description = "allow example secrets in docs"
+  paths = [
+    '''docs/examples/.*''',
+    '''.*\.example$'''
+  ]
+  # allow generic test keys in examples only
+  regexes = [
+    '''sk-test-.*''',
+    '''EXAMPLE_.*'''
+  ]

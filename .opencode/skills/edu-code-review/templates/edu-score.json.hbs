@@ -1,0 +1,27 @@
+{
+  "security": {{security}},
+  "performance": {{performance}},
+  "cleanCode": {{cleanCode}},
+  "organization": {{organization}},
+  "final": {{final}},
+  "grade": "{{grade}}",
+  "deductions": [
+    {{#each deductions}}
+    {
+      "category": "{{category}}",
+      "severity": "{{severity}}",
+      "rule": "{{rule}}",
+      "file": "{{file}}",
+      "line": {{line}},
+      "message": "{{message}}",
+      "fix": "{{fix}}"
+    }{{#unless @last}},{{/unless}}
+    {{/each}}
+  ],
+  "meta": {
+    "rubric": "docs/edu-rubric.md",
+    "skill": "edu-code-review",
+    "mode": "advisory",
+    "prefix": "edu-"
+  }
+}

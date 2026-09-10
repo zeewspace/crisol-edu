@@ -1,0 +1,18 @@
+# edu- hooks: keep fast, advisory for beginners (warn, don't block on lint initially)
+# Install: npx lefthook install  (or npm run prepare)
+pre-commit:
+  parallel: true
+  commands:
+    edu-lint:
+      glob: "*.{js,ts,jsx,tsx,mjs}"
+      run: npx eslint {staged_files} --max-warnings 50
+      stage_fixed: true
+    edu-gitleaks:
+      run: gitleaks protect --staged --verbose --redact --no-banner
+      # if gitleaks not installed, skip gracefully
+      skip: '{{not (exe "gitleaks")}}'
+
+commit-msg:
+  commands:
+    edu-commitlint:
+      run: npx --no -- commitlint --edit {1}

@@ -1,0 +1,33 @@
+## edu-code-review — Scorecard (advisory)
+
+> Fuente: `docs/edu-rubric.md` · Skill: `edu-code-review` (`/edu-review`) · Modo advisory: no bloquea merge
+
+| Eje | Score | Deducciones |
+|-----|-------|-------------|
+| **S Security** | {{security}} /10 | Critical×{{sCritical}} Major×{{sMajor}} Minor×{{sMinor}} |
+| **P Performance** | {{performance}} /10 | Critical×{{pCritical}} Major×{{pMajor}} Minor×{{pMinor}} |
+| **C Clean Code** | {{cleanCode}} /10 | Critical×{{cCritical}} Major×{{cMajor}} Minor×{{cMinor}} |
+| **O Organization** | {{organization}} /10 | Critical×{{oCritical}} Major×{{oMajor}} Minor×{{oMinor}} |
+| **Final** | **{{final}} /10 — {{grade}}** | `Final = (S+P+C+O)/4` |
+
+### Deducciones
+
+| Eje | Sev | Regla | File:Line | Mensaje | Fix sugerido |
+|-----|-----|-------|-----------|---------|--------------|
+{{#each deductions}}
+| {{category}} | {{severity}} | {{rule}} | `{{file}}:{{line}}` | {{message}} | {{fix}} |
+{{/each}}
+
+### Feedback (1 fuerza + 1 mejora por eje)
+
+- **S**: Fuerza: {{sStrength}} · Mejora: {{sImprovement}}
+- **P**: Fuerza: {{pStrength}} · Mejora: {{pImprovement}}
+- **C**: Fuerza: {{cStrength}} · Mejora: {{cImprovement}}
+- **O**: Fuerza: {{oStrength}} · Mejora: {{oImprovement}}
+
+### Cómo subir de banda
+
+Mínimo 1 fix por eje con mayor deducción. Ver ejemplos: `docs/examples/edu-score-10.md` (10) y `docs/examples/edu-score-04.md` (~4).
+
+---
+*edu-score.json subido como artifact · Workflows: `edu-ci.yml` + `edu-review.yml`*
