@@ -1,6 +1,6 @@
 # Ejemplo ~4/10 — edu-score (anti-patrón real)
 
-> Basado en `EstreFlores/Todo-List-con-TRPC` (commit `ae39b5f` + review del repo clonado en `D:\CODE\reviews\Todo-List-con-TRPC`). Cada fila es una deducción que la skill `edu-code-review` marcaría.
+> Basado en `EstreFlores/Todo-List-con-TRPC` (commit `ae39b5f`). Cada fila es una deducción que la skill `edu-code-review` marcaría.
 
 ## Commits
 

@@ -57,7 +57,7 @@ Final = (S + P + C + O) / 4   (pesos iguales)
 - **4-6**: un Critical o 2 Majors.
 - **0-3**: múltiples Criticals.
 
-**Ejemplo real:** `D:\CODE\reviews\Todo-List-con-TRPC\server\routers\todo.ts:61,78` usa `throw new Error("Todo no encontrado")` → sale como 500 genérico. Mejor `TRPCError({ code: "NOT_FOUND" })` (tipado y con código semántico). No es Critical, pero es Major en S5/C.
+**Ejemplo real:** `server/routers/todo.ts:61,78` (repo `EstreFlores/Todo-List-con-TRPC`) usa `throw new Error("Todo no encontrado")` → sale como 500 genérico. Mejor `TRPCError({ code: "NOT_FOUND" })` (tipado y con código semántico). No es Critical, pero es Major en S5/C.
 
 ---
 

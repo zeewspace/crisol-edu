@@ -1,5 +1,9 @@
-# edu- hooks: keep fast, advisory for beginners (warn, don't block on lint initially)
-# Install: npx lefthook install  (or npm run prepare)
+# edu- hooks (opcional, solo para feedback local rápido)
+# Qué es lefthook: gestor de git hooks. Corre ANTES de que el commit se cree:
+#  - pre-commit: eslint en archivos staged + gitleaks (secret scan)
+#  - commit-msg: commitlint (valida que el mensaje sea conventional commits)
+# Si no está instalado, no pasa nada: el CI (edu-ci.yml) hace las mismas checks.
+# Install: npx lefthook install  (o npm run prepare — corre solo)
 pre-commit:
   parallel: true
   commands:

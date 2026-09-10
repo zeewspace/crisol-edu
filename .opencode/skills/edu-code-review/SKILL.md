@@ -12,7 +12,7 @@ metadata:
 # edu-code-review — Revisor para estudiantes (advisory)
 
 > **Prefijo `edu-`**: todo lo de este dominio usa `edu-` para no colisionar con `work-unit-commits`, `branch-pr`, `chained-pr`.
-> Fuente de verdad: `docs/edu-rubric.md` en `D:\CODE\estudiantes`.
+> Fuente de verdad: `docs/edu-rubric.md` (en la raíz del repo).
 
 ## Cuándo se activa
 
