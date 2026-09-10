@@ -93,10 +93,10 @@ jobs:
               body
             });
 
-      - name: Upload edu-score.json
+      - name: Upload edu results (JSON + HTML report)
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b48861d22a16335 # v4.6.2
         with:
-          name: edu-score.json
-          path: .crisol/results/edu-score.json
+          name: edu-results
+          path: .crisol/results/
           retention-days: 14
           if-no-files-found: warn
