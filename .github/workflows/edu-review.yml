@@ -1,6 +1,7 @@
 name: edu-review
 
-# Local-first: review solo en PR opened/reopened y /edu-review manual (no en cada synchronize).
+# Local-first: review solo en PR opened/reopened y /edu manual (no en cada synchronize).
+# Aliases: /edu (primario), /edu-review, /evaluar, /revisar
 on:
   pull_request:
     types: [opened, reopened]
@@ -15,12 +16,12 @@ concurrency:
 
 jobs:
   edu-review:
-    # Solo OWNER/MEMBER/COLLABORATOR pueden disparar /edu-review. CONTRIBUTOR solo si es su propio PR.
+    # Solo OWNER/MEMBER/COLLABORATOR pueden disparar /edu (alias /edu-review, /evaluar, /revisar). CONTRIBUTOR solo si es su propio PR.
     if: >
       github.event_name == 'pull_request' ||
       (github.event_name == 'issue_comment' &&
        github.event.issue.pull_request &&
-       contains(github.event.comment.body, '/edu-review') &&
+       (contains(github.event.comment.body, '/edu') || contains(github.event.comment.body, '/evaluar') || contains(github.event.comment.body, '/revisar')) &&
        contains(fromJson('["OWNER","MEMBER","COLLABORATOR","CONTRIBUTOR"]'), github.event.comment.author_association))
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -54,7 +55,7 @@ jobs:
           cat "$RESULTS" || true
 
       - name: Comment edu-scorecard
-        if: github.event_name == 'pull_request' || contains(github.event.comment.body, '/edu-review')
+        if: github.event_name == 'pull_request' || contains(github.event.comment.body, '/edu') || contains(github.event.comment.body, '/evaluar') || contains(github.event.comment.body, '/revisar')
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34d # v7.0.1
         with:
           script: |
@@ -72,7 +73,7 @@ jobs:
             | **O Organization** | ${score.organization} /10 |
             | **Final** | **${score.final} /10 — ${score.grade}** |
 
-            > Fuente: \`docs/edu-rubric.md\` · Modo advisory: no bloquea merge · Comando: \`/edu-review\` · Local-first: \`npm run edu:review\`
+            > Fuente: \`docs/edu-rubric.md\` · Modo advisory: no bloquea merge · Comando: \`/edu\` (alias \`/edu-review\`, \`/evaluar\`, \`/revisar\`) · Local-first: \`npm run edu\` o \`/edu --quick\`
 
             <details><summary>Deducciones</summary>
 

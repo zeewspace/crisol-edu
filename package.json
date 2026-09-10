@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "edu": "node ./scripts/edu-score.mjs --full",
     "edu:lint": "eslint . --max-warnings 0",
-    "edu:review": "node ./scripts/edu-score.mjs",
+    "edu:review": "node ./scripts/edu-score.mjs --quick",
     "edu:score": "node ./scripts/edu-score.mjs --full",
     "edu:score:full": "node ./scripts/edu-score.mjs --full --history",
     "edu:grill": "node ./scripts/edu-score.mjs --full && echo \"grill: ver docs/grill-report.template.md y .crisol/grill/\"",

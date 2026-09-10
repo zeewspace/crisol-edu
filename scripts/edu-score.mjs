@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 // edu-score.mjs — helper scorer for edu-code-review (advisory, local-first)
 // Usage:
-//   node ./scripts/edu-score.mjs                          # indicación semáforo (local, no 0-10)
-//   node ./scripts/edu-score.mjs --full                   # scoring 0-10 completo
+//   node ./scripts/edu-score.mjs          # full 0-10 por defecto (para /edu)
+//   node ./scripts/edu-score.mjs --quick  # indicación semáforo (local rápido)
 //   node ./scripts/edu-score.mjs --deductions path.json   # con deducciones
 //   node ./scripts/edu-score.mjs --out custom.json        # custom out
-//   node ./scripts/edu-score.mjs --full --history         # append a .crisol/history/history.ndjson
-// Default local-first: out -> .crisol/results/edu-score.json (gitignored)
+//   node ./scripts/edu-score.mjs --history                # append a .crisol/history/history.ndjson
+// Default: full 0-10; --quick para semáforo. Out -> .crisol/results/edu-score.json (gitignored)
 
 import { writeFileSync, readFileSync, existsSync, mkdirSync, appendFileSync } from "node:fs";
 import { dirname } from "node:path";
@@ -20,7 +20,9 @@ const getArg = (name, def) => {
 
 const deductionsPath = getArg("--deductions", null);
 const outPath = getArg("--out", ".crisol/results/edu-score.json");
-const fullMode = has("--full");
+const hasQuick = has("--quick");
+const hasFull = has("--full");
+const fullMode = hasQuick ? false : true; // /edu full por defecto, --quick para indicación
 const historyFlag = getArg("--history", has("--history") ? ".crisol/history/history.ndjson" : null);
 
 let deductions = [];

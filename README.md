@@ -21,11 +21,11 @@
 ## Cómo evalúa un profesor — en 60 segundos
 
 ```bash
-# En el PR del estudiante, comentá:
-/edu-review
+# En el PR del estudiante, comentá (alias: /edu-review, /evaluar, /revisar):
+/edu
 ```
 
-Eso dispara `.github/workflows/edu-review.yml` → corre `edu-code-review` → postea esto:
+Eso dispara `.github/workflows/edu-review.yml` → corre `edu-code-review` (full 0-10) → postea esto. Para indicación rápida: `/edu --quick`.
 
 | Eje | Score |
 |-----|-------|
@@ -101,9 +101,9 @@ git clone https://github.com/zeewspace/crisol-edu.git
 cd crisol-edu
 npm install
 npx lefthook install   # hooks: commitlint + eslint + gitleaks (opcional, CI es fuente de verdad)
+npm run edu            # full 0-10 en .crisol/results/edu-score.json (= /edu)
+npm run edu:review     # indicación 🟢/🟡/🔴 + 1 tip (rápido, = /edu --quick)
 npm run edu:lint       # debe pasar verde
-npm run edu:review     # indicación 🟢/🟡/🔴 + 1 tip por eje (local, 2 seg)
-npm run edu:score -- --full   # 0-10 completo en .crisol/results/edu-score.json
 ```
 
 La skill `edu-code-review` ya viene en `.opencode/skills/edu-code-review` — opencode la detecta como *project skill* sin instalar nada global.
@@ -142,10 +142,11 @@ Todo lo de este dominio usa **`edu-`** para no pisar skills que ya tenés:
 | Qué | Nombre | Dónde |
 |-----|--------|-------|
 | Skill | `edu-code-review` | `skill("edu-code-review")` |
-| Comando PR | `/edu-review` | comentario en PR |
+| Comando opencode | `/edu` (alias `/edu-review`, `/evaluar`, `/revisar`) | `.opencode/commands/edu.md` |
+| Comando PR | `/edu` | comentario en PR |
 | Rubric | `docs/edu-rubric.md` | fuente de verdad |
 | Workflows | `edu-ci.yml`, `edu-review.yml` | `.github/workflows/` |
-| Scripts | `edu:lint`, `edu:review`, `edu:score` | `package.json` |
+| Scripts | `edu` (full), `edu:review` (--quick), `edu:lint` | `package.json` |
 | Templates | `edu-comment.md.hbs`, `edu-score.json.hbs` | skill |
 
 Alias: `work-unit-commits` = `strategic-commit`.
@@ -155,7 +156,7 @@ Alias: `work-unit-commits` = `strategic-commit`.
 ## Workflows (local-first)
 
 - **`edu-ci.yml`**: solo en `push` a `main` corre `edu:lint` + `gitleaks` + `commitlint`. Advisory. Local es primario.
-- **`edu-review.yml`**: solo en `opened` + `/edu-review` (no en cada push) corre la skill si sos OWNER/MEMBER/COLLABORATOR, postea comentario y sube `.crisol/results/edu-score.json` (14 días).
+- **`edu-review.yml`**: solo en `opened` + `/edu` (alias `/edu-review`, `/evaluar`, `/revisar`) corre la skill si sos OWNER/MEMBER/COLLABORATOR, postea comentario y sube `.crisol/results/edu-score.json` (14 días).
 
 Resultados locales en `.crisol/` (ver `.crisol/README.md`), no en `main`.
 

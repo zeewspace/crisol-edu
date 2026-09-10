@@ -30,11 +30,13 @@ pnpm-debug.log*
 .vscode/
 .idea/
 
-# opencode — keep edu- skill for students, ignore cache
+# opencode — keep edu- skill + commands for students, ignore cache
 .opencode/*
 !.opencode/skills
 !.opencode/skills/edu-code-review
 !.opencode/skills/edu-code-review/**
+!.opencode/commands
+!.opencode/commands/**
 .atl/
 
 # gitleaks

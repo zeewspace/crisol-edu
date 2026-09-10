@@ -1,6 +1,6 @@
 ---
 name: edu-code-review
-description: "Teachable AI review [edu-] — Security, Performance, Clean Code, Organization 0-10. Trigger: /edu-review, skill('edu-code-review'), or pull_request via edu-review.yml. Advisory, never blocks."
+description: "Teachable AI review [edu-] — Security, Performance, Clean Code, Organization 0-10. Trigger: /edu (aliases /edu-review, /evaluar, /revisar), skill('edu-code-review'), or pull_request via edu-review.yml. Advisory, never blocks."
 license: MIT
 metadata:
   author: gentleman-programming
@@ -16,10 +16,10 @@ metadata:
 
 ## Cuándo se activa
 
-- Explícito: `skill("edu-code-review")`
-- Comando en PR/issue: `/edu-review`
-- Automático: `pull_request` (`opened`, `reopened`) vía `.github/workflows/edu-review.yml` (local-first, no `synchronize`) + `/edu-review`
-- Manual local: `npm run edu:review` (indicación 🟢/🟡/🔴) / `npm run edu:score -- --full` (0-10) / `npm run edu:grill`
+- Explícito: `skill("edu-code-review")` o `/edu` (slash opencode, ver `.opencode/commands/edu.md`)
+- Comando en PR/issue: `/edu` (primario), alias `/edu-review`, `/evaluar`, `/revisar` — todos disparan el mismo job
+- Automático: `pull_request` (`opened`, `reopened`) vía `.github/workflows/edu-review.yml` (local-first, no `synchronize`)
+- Manual local: `npm run edu` (full 0-10) / `npm run edu:review` (`--quick`, indicación 🟢/🟡/🔴) / `npm run edu:grill`
 
 ## Qué hace (advisory, nunca bloquea)
 
@@ -32,15 +32,21 @@ metadata:
 ## Cómo invocar
 
 ```bash
-# En chat del agente
-skill("edu-code-review")
+# En chat del agente (opencode) — un comando
+/edu                # full 0-10 (default)
+/edu --quick        # indicación semáforo (2 seg)
+skill("edu-code-review")  # alias largo
 
 # En PR (comentario)
-/edu-review
+/edu              # primario
+/evaluar          # alias ES
+/revisar          # alias ES
+/edu-review       # alias legacy
 
 # Local
+npm run edu         # full 0-10 (= /edu)
+npm run edu:review  # indicación (--quick)
 npm run edu:lint
-npm run edu:review
 ```
 
 ## Ejes y severidades
