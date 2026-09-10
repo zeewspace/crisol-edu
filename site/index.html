@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crisol EDU — Forja de código para estudiantes</title>
+  <meta name="description" content="Sistema advisory S/P/C/O 0-10 con prefijo edu-. Un comando /edu, cero fricción. Para estudiantes y profes de Zeew Space." />
+  <link rel="stylesheet" href="./tokens.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter Variable','Inter','sans-serif'],
+            display: ['Poppins','sans-serif'],
+            mono: ['JetBrains Mono Variable','JetBrains Mono','monospace'],
+          },
+          colors: {
+            background: 'var(--background)',
+            foreground: 'var(--foreground)',
+            card: 'var(--card)',
+            'card-foreground': 'var(--card-foreground)',
+            border: 'var(--border)',
+            muted: 'var(--muted)',
+            'muted-foreground': 'var(--muted-foreground)',
+            primary: 'var(--primary)',
+            cta: 'var(--cta)',
+            'cta-foreground': 'var(--cta-foreground)',
+            extra: 'var(--extra)',
+            warm: 'var(--warm)',
+            wine: 'var(--wine)',
+          },
+          borderRadius: { lg: 'var(--radius)', xl: 'var(--radius-btn)' },
+          boxShadow: {
+            card: 'var(--shadow-card)',
+            glow: 'var(--shadow-glow)',
+            'glow-warm': 'var(--shadow-glow-warm)',
+            well: 'var(--shadow-well)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: dark; }
+    body { background: var(--background); color: var(--foreground); font-family: Inter, sans-serif; }
+    .gradient-cosmic { background: var(--gradient-cosmic); }
+    .gradient-dusk { background: var(--gradient-dusk); }
+    .gradient-sequence { background: var(--gradient-sequence); }
+    .text-gradient { background: var(--gradient-sequence); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hairline { border-color: var(--hairline); }
+    .shadow-card { box-shadow: var(--shadow-card); }
+    .shadow-glow { box-shadow: var(--shadow-glow); }
+  </style>
+</head>
+<body class="min-h-screen antialiased">
+  <!-- Header -->
+  <header class="sticky top-0 z-10 border-b hairline bg-[var(--hull)]/80 backdrop-blur">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      <div class="flex items-center gap-3">
+        <div class="grid h-8 w-8 place-items-center rounded-lg gradient-cosmic text-[12px] font-bold text-[var(--cta-foreground)]">◆</div>
+        <span class="font-display text-sm font-semibold tracking-tight">crisol-edu</span>
+        <span class="rounded-full bg-[var(--cta-soft)] px-2 py-0.5 text-[10px] font-medium tracking-widest text-[var(--cta)]">EDU-</span>
+      </div>
+      <nav class="hidden gap-6 text-sm text-[var(--muted-foreground)] md:flex">
+        <a href="#ejes" class="hover:text-[var(--foreground)]">Ejes</a>
+        <a href="#glosario" class="hover:text-[var(--foreground)]">Glosario</a>
+        <a href="#datos" class="hover:text-[var(--foreground)]">Datos</a>
+        <a href="https://github.com/zeewspace/crisol-edu" class="hover:text-[var(--foreground)]">GitHub</a>
+      </nav>
+      <a href="https://github.com/zeewspace/crisol-edu" class="rounded-full bg-[var(--primary)] px-4 py-1.5 text-xs font-semibold text-[var(--primary-foreground)] hover:bg-white">Ver repo</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 gradient-aurora"></div>
+    <div class="absolute inset-0 gradient-room"></div>
+    <div class="relative mx-auto max-w-6xl px-6 py-16 md:py-24">
+      <div class="max-w-3xl">
+        <p class="mb-3 inline-flex items-center gap-2 rounded-full border hairline bg-[var(--card)] px-3 py-1 text-xs text-[var(--muted-foreground)]">
+          <span class="h-2 w-2 animate-live rounded-full bg-[var(--extra)]"></span>
+          Local-first · Advisory · Prefijo <span class="font-mono text-[var(--extra)]">edu-</span>
+        </p>
+        <h1 class="font-display text-4xl font-bold leading-[0.95] tracking-tight md:text-6xl">
+          Forja de código<br />
+          <span class="text-gradient">para estudiantes</span>
+        </h1>
+        <p class="mt-4 max-w-xl text-[15px] leading-relaxed text-[var(--muted-foreground)]">
+          Un sistema teachable para que <b class="text-[var(--foreground)]">profes evalúen en 60 segundos</b> y <b class="text-[var(--foreground)]">estudiantes sepan qué mejorar</b> sin 20 comentarios sueltos. 4 ejes 0-10, un comando <code class="rounded bg-[var(--muted)] px-1.5 py-0.5 font-mono text-xs">/edu</code>, cero fricción.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="#comando" class="inline-flex items-center gap-2 rounded-full gradient-cosmic px-5 py-2.5 text-sm font-semibold text-[var(--cta-foreground)] shadow-glow hover:opacity-90">Probar /edu — full 0-10</a>
+          <a href="#glosario" class="inline-flex items-center gap-2 rounded-full border hairline bg-[var(--card)] px-5 py-2.5 text-sm font-medium hover:bg-[var(--muted)]">Ver glosario</a>
+          <span class="inline-flex items-center rounded-full border hairline bg-[var(--card)] px-3 py-2 text-xs font-mono text-[var(--muted-foreground)]">npm run edu --quick → 🟢/🟡/🔴</span>
+        </div>
+        <p class="mt-3 text-xs text-[var(--faint)]">Modo advisory: nunca bloquea merge. Fuente de verdad: <a href="https://github.com/zeewspace/crisol-edu/blob/main/docs/edu-rubric.md" class="underline decoration-[var(--hairline)] underline-offset-4 hover:text-[var(--foreground)]">docs/edu-rubric.md</a></p>
+      </div>
+
+      <!-- Quick stats cards -->
+      <div class="mt-10 grid gap-3 md:grid-cols-4">
+        <div class="rounded-2xl border hairline bg-[var(--card)] p-4 shadow-card">
+          <p class="text-xs tracking-widest text-[var(--faint)]">COMANDO</p>
+          <p class="mt-1 font-mono text-lg font-semibold">/edu</p>
+          <p class="text-xs text-[var(--muted-foreground)]">alias /evaluar /revisar /edu-review</p>
+        </div>
+        <div class="rounded-2xl border hairline bg-[var(--card)] p-4 shadow-card">
+          <p class="text-xs tracking-widest text-[var(--faint)]">EJES</p>
+          <p class="mt-1 font-display text-lg font-semibold">S · P · C · O</p>
+          <p class="text-xs text-[var(--muted-foreground)]">Security Performance Clean Org</p>
+        </div>
+        <div class="rounded-2xl border hairline bg-[var(--card)] p-4 shadow-card">
+          <p class="text-xs tracking-widest text-[var(--faint)]">FÓRMULA</p>
+          <p class="mt-1 font-mono text-sm font-semibold">10 − (C×3+M×1.5+m×0.5)</p>
+          <p class="text-xs text-[var(--muted-foreground)]">Final (S+P+C+O)/4</p>
+        </div>
+        <div class="rounded-2xl border hairline bg-[var(--card)] p-4 shadow-card">
+          <p class="text-xs tracking-widest text-[var(--faint)]">MODO</p>
+          <p class="mt-1 font-display text-lg font-semibold">Advisory</p>
+          <p class="text-xs text-[var(--muted-foreground)]">Educa, no bloquea</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ejes -->
+  <section id="ejes" class="mx-auto max-w-6xl px-6 py-12">
+    <h2 class="font-display text-2xl font-semibold">Los 4 ejes — qué mide cada uno</h2>
+    <p class="mt-1 text-sm text-[var(--muted-foreground)]">Cada deducción trae <code class="font-mono text-xs">file:line</code> + severidad + fix. Un fix por eje por PR → de 4 a 6.5 en un sprint.</p>
+    <div class="mt-6 grid gap-4 md:grid-cols-2">
+      <div class="rounded-2xl border hairline bg-[var(--card)] p-5 shadow-card">
+        <div class="flex items-center gap-3">
+          <span class="grid h-8 w-8 place-items-center rounded-lg bg-[var(--danger-soft)] text-[var(--danger)]">S</span>
+          <h3 class="font-semibold">S — Security</h3>
+          <span class="ml-auto rounded-full bg-[var(--muted)] px-2 py-0.5 text-[10px] tracking-widest">R1 RISK</span>
+        </div>
+        <p class="mt-3 text-sm text-[var(--muted-foreground)]">¿Se puede romper o filtrar? Secret en repo, `NEXT_PUBLIC_SECRET`, injection, XSS, validación, auth solo en cliente.</p>
+        <p class="mt-2 font-mono text-xs text-[var(--faint)]">Si fallás: token filtrado, 500 en lugar de 404 tipado.</p>
+      </div>
+      <div class="rounded-2xl border hairline bg-[var(--card)] p-5 shadow-card">
+        <div class="flex items-center gap-3">
+          <span class="grid h-8 w-8 place-items-center rounded-lg bg-[var(--warning-soft)] text-[var(--warning)]">P</span>
+          <h3 class="font-semibold">P — Performance</h3>
+          <span class="ml-auto rounded-full bg-[var(--muted)] px-2 py-0.5 text-[10px] tracking-widest">R4 RESILIENCE</span>
+        </div>
+        <p class="mt-3 text-sm text-[var(--muted-foreground)]">¿Escala? N+1, listas sin paginar, `httpLink` sin batch, God component 250 líneas, bundle 1MB.</p>
+        <p class="mt-2 font-mono text-xs text-[var(--faint)]">Fix: `httpBatchLink`, `staleTime`, paginación cursor.</p>
+      </div>
+      <div class="rounded-2xl border hairline bg-[var(--card)] p-5 shadow-card">
+        <div class="flex items-center gap-3">
+          <span class="grid h-8 w-8 place-items-center rounded-lg bg-[var(--info-soft)] text-[var(--info)]">C</span>
+          <h3 class="font-semibold">C — Clean Code</h3>
+          <span class="ml-auto rounded-full bg-[var(--muted)] px-2 py-0.5 text-[10px] tracking-widest">R2 READABILITY</span>
+        </div>
+        <p class="mt-3 text-sm text-[var(--muted-foreground)]">¿Se entiende en 5 seg? Inglés en lógica (no en datos de respuesta), SRP, ≤50 líneas, DRY, magic `86400` → `MAX_RETRIES`.</p>
+        <p class="mt-2 font-mono text-xs text-[var(--faint)]">`getUserById` ✅ vs `funcion1` ❌ — pero `mensaje: "Todo creado"` ✅</p>
+      </div>
+      <div class="rounded-2xl border hairline bg-[var(--card)] p-5 shadow-card">
+        <div class="flex items-center gap-3">
+          <span class="grid h-8 w-8 place-items-center rounded-lg bg-[var(--success-soft)] text-[var(--success)]">O</span>
+          <h3 class="font-semibold">O — Organization</h3>
+          <span class="ml-auto rounded-full bg-[var(--muted)] px-2 py-0.5 text-[10px] tracking-widest">R2 READABILITY</span>
+        </div>
+        <p class="mt-3 text-sm text-[var(--muted-foreground)]">¿Se navega fácil? Screaming Architecture `features/todo/`, `kebab/Pascal/camel` consistente, atomicidad, boundaries.</p>
+        <p class="mt-2 font-mono text-xs text-[var(--faint)]">Fix: `TodoItem.tsx` fuera de `page.tsx` 151 líneas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Datos / comparación -->
+  <section id="datos" class="mx-auto max-w-6xl px-6 py-8">
+    <div class="rounded-2xl border hairline bg-[var(--card)] p-6 shadow-card">
+      <h3 class="font-display text-lg font-semibold">Datos: 10 vs 4 — mismo Todo, distinto estándar</h3>
+      <p class="text-sm text-[var(--muted-foreground)]">Basado en <a href="https://github.com/EstreFlores/Todo-List-con-TRPC" class="underline">Todo-List-con-TRPC</a> (docs/examples). <code class="font-mono text-xs">/edu --quick</code> te da el semáforo en 2 seg.</p>
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        <div>
+          <p class="font-mono text-xs tracking-widest text-[var(--success)]">10/10 — EXCELENTE</p>
+          <div class="mt-2 space-y-2">
+            <div class="flex items-center gap-2 text-sm"><span class="w-6 text-[var(--success)]">S</span><div class="h-2 flex-1 rounded-full bg-[var(--muted)]"><div class="h-2 w-full rounded-full bg-[var(--success)]"></div></div><span class="font-mono text-xs">10</span></div>
+            <div class="flex items-center gap-2 text-sm"><span class="w-6 text-[var(--success)]">P</span><div class="h-2 flex-1 rounded-full bg-[var(--muted)]"><div class="h-2 w-full rounded-full bg-[var(--success)]"></div></div><span class="font-mono text-xs">10</span></div>
+            <div class="flex items-center gap-2 text-sm"><span class="w-6 text-[var(--success)]">C</span><div class="h-2 flex-1 rounded-full bg-[var(--muted)]"><div class="h-2 w-full rounded-full bg-[var(--success)]"></div></div><span class="font-mono text-xs">10</span></div>
+            <div class="flex items-center gap-2 text-sm"><span class="w-6 text-[var(--success)]">O</span><div class="h-2 flex-1 rounded-full bg-[var(--muted)]"><div class="h-2 w-full rounded-full bg-[var(--success)]"></div></div><span class="font-mono text-xs">10</span></div>
+          </div>
+          <p class="mt-3 text-xs text-[var(--faint)]">`feat(todo): add TodoItem with a11y` · `TRPCError` · `httpBatchLink` · `features/todo/`</p>
+        </div>
+        <div>
+          <p class="font-mono text-xs tracking-widest text-[var(--danger)]">~4/10 — REPROBADO (advisory)</p>
+          <div class="mt-2 space-y-2">
+            <div class="flex items-center gap-2 text-sm"><span class="w-6 text-[var(--danger)]">S</span><div class="h-2 flex-1 rounded-full bg-[var(--muted)]"><div class="h-2 w-[65%] rounded-full bg-[var(--warning)]"></div></div><span class="font-mono text-xs">6.5</span></div>
+            <div class="flex items-center gap-2 text-sm"><span class="w-6 text-[var(--danger)]">P</span><div class="h-2 flex-1 rounded-full bg-[var(--muted)]"><div class="h-2 w-[40%] rounded-full bg-[var(--danger)]"></div></div><span class="font-mono text-xs">4.0</span></div>
+            <div class="flex items-center gap-2 text-sm"><span class="w-6 text-[var(--danger)]">C</span><div class="h-2 flex-1 rounded-full bg-[var(--muted)]"><div class="h-2 w-[25%] rounded-full bg-[var(--danger)]"></div></div><span class="font-mono text-xs">2.5</span></div>
+            <div class="flex items-center gap-2 text-sm"><span class="w-6 text-[var(--warning)]">O</span><div class="h-2 flex-1 rounded-full bg-[var(--muted)]"><div class="h-2 w-[45%] rounded-full bg-[var(--warning)]"></div></div><span class="font-mono text-xs">4.5</span></div>
+          </div>
+          <p class="mt-3 text-xs text-[var(--faint)]">`este es el primer commit` · God 151 líneas · `throw new Error` · `console.log(r.status`</p>
+        </div>
+      </div>
+      <div class="mt-6 flex flex-wrap gap-2 text-xs">
+        <span class="rounded-full border hairline bg-[var(--muted)] px-3 py-1">Critical −3</span>
+        <span class="rounded-full border hairline bg-[var(--muted)] px-3 py-1">Major −1.5</span>
+        <span class="rounded-full border hairline bg-[var(--muted)] px-3 py-1">Minor −0.5</span>
+        <span class="rounded-full bg-[var(--card)] px-3 py-1 font-mono">Final (S+P+C+O)/4</span>
+        <span class="text-[var(--faint)]">Bandas: 9-10 Excelente · 7-8.5 Bueno · 5-6.5 Deuda · &lt;5 Reprobado</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comando -->
+  <section id="comando" class="mx-auto max-w-6xl px-6 py-8">
+    <div class="grid gap-4 md:grid-cols-3">
+      <div class="rounded-2xl border hairline bg-[var(--card)] p-5">
+        <p class="font-mono text-xs tracking-widest text-[var(--cta)]">EN OPENCODE</p>
+        <p class="mt-1 font-display font-semibold">/edu</p>
+        <p class="text-sm text-[var(--muted-foreground)]">Full 0-10 por defecto. Alias: <code class="font-mono text-xs">/edu-review</code> <code class="font-mono text-xs">/evaluar</code> <code class="font-mono text-xs">/revisar</code></p>
+        <p class="mt-2 font-mono text-xs text-[var(--faint)]">/edu --quick → 🟢/🟡/🔴</p>
+      </div>
+      <div class="rounded-2xl border hairline bg-[var(--card)] p-5">
+        <p class="font-mono text-xs tracking-widest text-[var(--extra)]">EN TERMINAL</p>
+        <p class="mt-1 font-mono text-sm font-semibold">npm run edu</p>
+        <p class="text-sm text-[var(--muted-foreground)]">11 chars. Antes: <code class="line-through">npm run edu:score -- --full</code> 27</p>
+        <p class="mt-2 font-mono text-xs text-[var(--faint)]">npm run edu:review → --quick</p>
+      </div>
+      <div class="rounded-2xl border hairline bg-[var(--card)] p-5">
+        <p class="font-mono text-xs tracking-widest text-[var(--warm)]">EN PR</p>
+        <p class="mt-1 font-mono text-sm font-semibold">/edu</p>
+        <p class="text-sm text-[var(--muted-foreground)]">Comenta en el PR. Requiere OWNER/MEMBER/COLLABORATOR.</p>
+        <p class="mt-2 font-mono text-xs text-[var(--faint)]">Local-first: no en cada push</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Glosario -->
+  <section id="glosario" class="mx-auto max-w-6xl px-6 py-8">
+    <h2 class="font-display text-2xl font-semibold">Glosario — si no sabés de qué trata, empezá acá</h2>
+    <p class="mt-1 text-sm text-[var(--muted-foreground)]">Términos del rubric y del día a día. Lógica en inglés, datos en español ✅ — ver <a href="https://github.com/zeewspace/crisol-edu/blob/main/docs/edu-rubric.md#C1" class="underline">edu-rubric#C1</a>.</p>
+    <div class="mt-6 grid gap-3">
+      <details class="group rounded-2xl border hairline bg-[var(--card)] p-4 open:bg-[var(--mist)]">
+        <summary class="flex cursor-pointer list-none items-center justify-between font-medium">Conventional Commits <span class="rounded-full bg-[var(--muted)] px-2 py-0.5 font-mono text-xs">commit</span></summary>
+        <p class="mt-2 text-sm text-[var(--muted-foreground)]"><code class="font-mono text-xs">feat(todo): add TodoItem with a11y</code> — tipo(scope): sujeto en inglés, imperativo, &lt;72 chars. Nunca <code class="font-mono text-xs">arreglado</code> o <code class="font-mono text-xs">primer commit</code>. Un cambio lógico por commit. <a href="https://www.conventionalcommits.org" class="underline">conventionalcommits.org</a></p>
+      </details>
+      <details class="group rounded-2xl border hairline bg-[var(--card)] p-4">
+        <summary class="flex cursor-pointer list-none items-center justify-between font-medium">Commit atómico <span class="rounded-full bg-[var(--muted)] px-2 py-0.5 font-mono text-xs">O4</span></summary>
+        <p class="mt-2 text-sm text-[var(--muted-foreground)]">1 commit = 1 idea. No mezcles <code class="font-mono text-xs">feat+fix+refactor</code>. Si tu <code class="font-mono text-xs">git diff --stat</code> muestra 8 archivos de dominios distintos, son 2-3 commits.</p>
+      </details>
+      <details class="group rounded-2xl border hairline bg-[var(--card)] p-4">
+        <summary class="flex cursor-pointer list-none items-center justify-between font-medium">SRP — Single Responsibility <span class="rounded-full bg-[var(--muted)] px-2 py-0.5 font-mono text-xs">C2</span></summary>
+        <p class="mt-2 text-sm text-[var(--muted-foreground)]">Una función hace UNA cosa. Mal: <code class="font-mono text-xs">handleData() { fetch+validate+save+notify }</code> → Bien: <code class="font-mono text-xs">validateTodo()</code> <code class="font-mono text-xs">saveTodo()</code> <code class="font-mono text-xs">notifyTodoCreated()</code>. ≤50 líneas, ≤3 params.</p>
+      </details>
+      <details class="group rounded-2xl border hairline bg-[var(--card)] p-4">
+        <summary class="flex cursor-pointer list-none items-center justify-between font-medium">God Component <span class="rounded-full bg-[var(--muted)] px-2 py-0.5 font-mono text-xs">P4/C3</span></summary>
+        <p class="mt-2 text-sm text-[var(--muted-foreground)]">Componente de 150+ líneas que hace query + mutations + state + handlers + JSX (ej. <code class="font-mono text-xs">app/page.tsx:6</code> del Todo-List). Partilo en <code class="font-mono text-xs">TodoItem</code> + <code class="font-mono text-xs">TodoForm</code> + <code class="font-mono text-xs">useTodos</code>.</p>
+      </details>
+      <details class="group rounded-2xl border hairline bg-[var(--card)] p-4">
+        <summary class="flex cursor-pointer list-none items-center justify-between font-medium">Screaming Architecture <span class="rounded-full bg-[var(--muted)] px-2 py-0.5 font-mono text-xs">O1</span></summary>
+        <p class="mt-2 text-sm text-[var(--muted-foreground)]">La estructura grita el dominio, no el tipo. Mal: <code class="font-mono text-xs">src/components|hooks|utils</code> con 40 archivos mezclados. Bien: <code class="font-mono text-xs">features/todo/{TodoList, TodoItem, useTodos, todo.schema.ts}</code>.</p>
+      </details>
+      <details class="group rounded-2xl border hairline bg-[var(--card)] p-4">
+        <summary class="flex cursor-pointer list-none items-center justify-between font-medium">N+1 <span class="rounded-full bg-[var(--muted)] px-2 py-0.5 font-mono text-xs">P1</span></summary>
+        <p class="mt-2 text-sm text-[var(--muted-foreground)]">Loop que hace 1 query por fila: <code class="font-mono text-xs">users.map(u =&gt; fetchPosts(u.id))</code>. Solución: batch, <code class="font-mono text-xs">include</code>, <code class="font-mono text-xs">Promise.all</code>, paginación.</p>
+      </details>
+      <details class="group rounded-2xl border hairline bg-[var(--card)] p-4">
+        <summary class="flex cursor-pointer list-none items-center justify-between font-medium">TRPCError vs throw <span class="rounded-full bg-[var(--muted)] px-2 py-0.5 font-mono text-xs">S5</span></summary>
+        <p class="mt-2 text-sm text-[var(--muted-foreground)]">En tRPC nunca <code class="font-mono text-xs">throw new Error("Todo no encontrado")</code> (500 genérico). Usá <code class="font-mono text-xs">throw new TRPCError({ code: "NOT_FOUND" })</code> — tipado y con código semántico.</p>
+      </details>
+      <details class="group rounded-2xl border hairline bg-[var(--card)] p-4">
+        <summary class="flex cursor-pointer list-none items-center justify-between font-medium">httpBatchLink <span class="rounded-full bg-[var(--muted)] px-2 py-0.5 font-mono text-xs">P3</span></summary>
+        <p class="mt-2 text-sm text-[var(--muted-foreground)]">tRPC: <code class="font-mono text-xs">httpLink</code> hace 1 request por procedure. <code class="font-mono text-xs">httpBatchLink</code> agrupa varias en un request. Mirá <code class="font-mono text-xs">utils/providers.tsx:18</code>.</p>
+      </details>
+      <details class="group rounded-2xl border hairline bg-[var(--card)] p-4">
+        <summary class="flex cursor-pointer list-none items-center justify-between font-medium">Magic number <span class="rounded-full bg-[var(--muted)] px-2 py-0.5 font-mono text-xs">C5</span></summary>
+        <p class="mt-2 text-sm text-[var(--muted-foreground)]"><code class="font-mono text-xs">if (x &gt; 86400)</code> → <code class="font-mono text-xs">const SECONDS_IN_DAY = 86400</code>. Nombra lo que el número significa.</p>
+      </details>
+      <details class="group rounded-2xl border hairline bg-[var(--card)] p-4">
+        <summary class="flex cursor-pointer list-none items-center justify-between font-medium">Local-first & .crisol <span class="rounded-full bg-[var(--muted)] px-2 py-0.5 font-mono text-xs">infra</span></summary>
+        <p class="mt-2 text-sm text-[var(--muted-foreground)]">Resultados en <code class="font-mono text-xs">.crisol/results/edu-score.json</code> (gitignored) + historial <code class="font-mono text-xs">.crisol/history/history.ndjson</code>. CI solo en <code class="font-mono text-xs">main</code> y <code class="font-mono text-xs">/edu</code> manual. Ver <code class="font-mono text-xs">.crisol/README.md</code>.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="mx-auto max-w-6xl px-6 py-12">
+    <div class="rounded-2xl border hairline bg-[var(--card)] p-6 text-center shadow-glow md:p-8">
+      <h3 class="font-display text-xl font-semibold">¿Listo para forjar?</h3>
+      <p class="mx-auto mt-2 max-w-xl text-sm text-[var(--muted-foreground)]">Cloná, corré <code class="rounded bg-[var(--muted)] px-1.5 py-0.5 font-mono text-xs">/edu</code> y subí tu primer PR. El rubric es tu espejo.</p>
+      <div class="mt-4 flex flex-wrap justify-center gap-3">
+        <a href="https://github.com/zeewspace/crisol-edu" class="rounded-full gradient-cosmic px-6 py-2.5 text-sm font-semibold text-[var(--cta-foreground)] shadow-glow">Abrir crisol-edu</a>
+        <a href="https://github.com/zeewspace/crisol-edu/blob/main/docs/edu-rubric.md" class="rounded-full border hairline bg-[var(--muted)] px-6 py-2.5 text-sm font-medium">Leer rubric</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t hairline py-8 text-center text-xs text-[var(--faint)]">
+    <p>Zeew Space · Crisol EDU · Prefijo <span class="font-mono">edu-</span> · Advisory, nunca bloquea · <a href="https://github.com/zeewspace/crisol-edu/blob/main/CHANGELOG.md" class="underline">CHANGELOG</a></p>
+  </footer>
+</body>
+</html>

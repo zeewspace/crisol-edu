@@ -1,0 +1,351 @@
+/* Zeew Space — cosmic palette as a lighting system, not a fill kit.
+   Brand hues are lamps. Surfaces are hull. Accent (#241B2A) stays UI hover. */
+
+:root,
+.dark {
+  color-scheme: dark;
+
+  /* ---- Void → hull → panel → well ---- */
+  --background: #0f0a12;
+  --hull: #140e18;
+  --mist: #1a141f;
+  --foreground: #f5eef4;
+
+  --card: #1b1420;
+  --card-foreground: #f5eef4;
+
+  --popover: #1b1420;
+  --popover-foreground: #f5eef4;
+
+  --primary: #f5eef4;
+  --primary-foreground: #0f0a12;
+
+  --secondary: #241b2a;
+  --secondary-foreground: #f5eef4;
+
+  --muted: #241b2a;
+  --muted-foreground: #c4b8c6;
+
+  --accent: #241b2a;
+  --accent-foreground: #f5eef4;
+
+  --cta: #ff67a4;
+  --cta-foreground: #0f0a12;
+  --cta-soft: rgba(255, 103, 164, 0.16);
+  --cta-100: #ffc1d9;
+  --cta-400: #e04d8c;
+  --cta-500: #b8326e;
+  --bloom: #ff8ec0;
+
+  --extra: #ffd447;
+  --extra-foreground: #0f0a12;
+  --extra-soft: rgba(255, 212, 71, 0.16);
+  --extra-100: #ffe38a;
+  --extra-500: #c49614;
+
+  --warm: #ffa477;
+  --warm-foreground: #0f0a12;
+  --warm-soft: rgba(255, 164, 119, 0.16);
+  --warm-100: #ffc4a8;
+  --warm-500: #e07a4e;
+
+  --wine: #8e375a;
+  --wine-foreground: #f5eef4;
+  --wine-soft: rgba(142, 55, 90, 0.32);
+  --wine-100: #c45a82;
+  --wine-500: #5c2038;
+
+  --amber: #ef9a45;
+  --amber-foreground: #0f0a12;
+
+  --destructive: #f26c7a;
+  --destructive-foreground: #0f0a12;
+
+  --border: #201b23;
+  --input: #201b23;
+  --ring: #ff67a4;
+
+  --radius: 1rem;
+  --radius-btn: 0.75rem;
+
+  /* Gradients — recipes, not decoration */
+  --gradient-cosmic: linear-gradient(90deg, #ff67a4 0%, #ffa477 100%);
+  --gradient-dusk: linear-gradient(135deg, #8e375a 0%, #ff67a4 100%);
+  --gradient-ember: linear-gradient(90deg, #ef9a45 0%, #ffd447 100%);
+  --gradient-sequence: linear-gradient(90deg, #8e375a 0%, #ff67a4 38%, #ffa477 72%, #ffd447 100%);
+  --gradient-live: linear-gradient(90deg, #8e375a 0%, #ffd447 100%);
+  --gradient-room: radial-gradient(
+    80% 70% at 50% 120%,
+    rgba(142, 55, 90, 0.45) 0%,
+    transparent 60%
+  ),
+    radial-gradient(70% 50% at 80% -10%, rgba(255, 164, 119, 0.18) 0%, transparent 50%);
+  --gradient-aurora: radial-gradient(
+    120% 80% at 20% 0%,
+    rgba(255, 103, 164, 0.22) 0%,
+    rgba(255, 164, 119, 0.08) 38%,
+    transparent 70%
+  );
+  --gradient-sheen: linear-gradient(
+    180deg,
+    rgba(245, 238, 244, 0.08) 0%,
+    transparent 42%
+  );
+  --gradient-void: linear-gradient(180deg, #1b1420 0%, #0f0a12 100%);
+  --gradient-radial: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 103, 164, 0.15) 0%,
+    transparent 70%
+  );
+  --gradient-glow: radial-gradient(
+    circle at center,
+    rgba(255, 103, 164, 0.4) 0%,
+    transparent 70%
+  );
+
+  /* Lights: offset + blur (halo sin offset es adorno) */
+  --shadow-inset: inset 0 1px 0 rgba(245, 238, 244, 0.07);
+  --shadow-well: inset 0 2px 10px rgba(8, 4, 12, 0.55);
+  --shadow-glow: 0 12px 28px -10px rgba(255, 103, 164, 0.5),
+    0 0 0 1px rgba(255, 103, 164, 0.14);
+  --shadow-glow-warm: 0 12px 28px -10px rgba(255, 164, 119, 0.45),
+    0 0 0 1px rgba(255, 164, 119, 0.14);
+  --shadow-glow-extra: 0 12px 28px -10px rgba(255, 212, 71, 0.4),
+    0 0 0 1px rgba(255, 212, 71, 0.16);
+  --shadow-glow-wine: 0 12px 28px -10px rgba(142, 55, 90, 0.55),
+    0 0 0 1px rgba(142, 55, 90, 0.35);
+  --shadow-glow-success: 0 12px 28px -10px rgba(88, 211, 142, 0.4),
+    0 0 0 1px rgba(88, 211, 142, 0.18);
+  --shadow-glow-info: 0 12px 28px -10px rgba(69, 117, 239, 0.4),
+    0 0 0 1px rgba(69, 117, 239, 0.2);
+  --shadow-glow-live: 0 14px 32px -10px rgba(255, 212, 71, 0.35),
+    0 8px 20px -12px rgba(142, 55, 90, 0.55);
+  --shadow-card: 0 10px 28px -12px rgba(8, 4, 12, 0.7),
+    inset 0 1px 0 rgba(245, 238, 244, 0.05);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 10px 24px -10px rgba(0, 0, 0, 0.55), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 28px 48px -18px rgba(0, 0, 0, 0.65),
+    0 8px 16px -8px rgba(0, 0, 0, 0.4);
+  --shadow-pop: 0 16px 36px -10px rgba(0, 0, 0, 0.6),
+    0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(245, 238, 244, 0.06);
+  --shadow-lift: 0 18px 40px -16px rgba(8, 4, 12, 0.85),
+    inset 0 1px 0 rgba(245, 238, 244, 0.07);
+
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --success: #58d38e;
+  --success-foreground: #0f0a12;
+  --success-soft: rgba(88, 211, 142, 0.14);
+  --warning: #ef9a45;
+  --warning-foreground: #0f0a12;
+  --warning-soft: rgba(239, 154, 69, 0.14);
+  --danger: #f26c7a;
+  --danger-foreground: #0f0a12;
+  --danger-soft: rgba(242, 108, 122, 0.14);
+  --info: #4575ef;
+  --info-foreground: #f5eef4;
+  --info-soft: rgba(69, 117, 239, 0.16);
+  --premium: #ffd447;
+  --premium-foreground: #0f0a12;
+  --premium-soft: rgba(255, 212, 71, 0.14);
+
+  --fg-2: #e5dce3;
+  --faint: #8f8293;
+
+  --border-strong: #312c33;
+  --hairline: rgba(245, 238, 244, 0.08);
+
+  --chart-1: #ff67a4;
+  --chart-2: #ffa477;
+  --chart-3: #ffd447;
+  --chart-4: #8e375a;
+  --chart-5: #4575ef;
+
+  --sidebar: #140e18;
+  --sidebar-foreground: #f5eef4;
+  --sidebar-primary: #ff67a4;
+  --sidebar-primary-foreground: #0f0a12;
+  --sidebar-accent: #241b2a;
+  --sidebar-accent-foreground: #f5eef4;
+  --sidebar-border: #201b23;
+  --sidebar-ring: #ff67a4;
+}
+
+@theme inline {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --color-background: var(--background);
+  --color-hull: var(--hull);
+  --color-mist: var(--mist);
+  --color-bloom: var(--bloom);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-hairline: var(--hairline);
+
+  --color-cta: var(--cta);
+  --color-cta-foreground: var(--cta-foreground);
+  --color-cta-soft: var(--cta-soft);
+  --color-cta-100: var(--cta-100);
+  --color-cta-400: var(--cta-400);
+  --color-cta-500: var(--cta-500);
+  --color-extra: var(--extra);
+  --color-extra-foreground: var(--extra-foreground);
+  --color-extra-soft: var(--extra-soft);
+  --color-extra-100: var(--extra-100);
+  --color-extra-500: var(--extra-500);
+  --color-warm: var(--warm);
+  --color-warm-foreground: var(--warm-foreground);
+  --color-warm-soft: var(--warm-soft);
+  --color-warm-100: var(--warm-100);
+  --color-warm-500: var(--warm-500);
+  --color-wine: var(--wine);
+  --color-wine-foreground: var(--wine-foreground);
+  --color-wine-soft: var(--wine-soft);
+  --color-wine-100: var(--wine-100);
+  --color-wine-500: var(--wine-500);
+  --color-amber: var(--amber);
+  --color-amber-foreground: var(--amber-foreground);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-soft: var(--info-soft);
+  --color-premium: var(--premium);
+  --color-premium-foreground: var(--premium-foreground);
+  --color-premium-soft: var(--premium-soft);
+
+  --color-fg-2: var(--fg-2);
+  --color-faint: var(--faint);
+  --color-border-strong: var(--border-strong);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: var(--radius-btn);
+  --radius-xl: 0.875rem;
+  --radius-2xl: var(--radius);
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
+
+  --shadow-inset: inset 0 1px 0 rgba(245, 238, 244, 0.07);
+  --shadow-well: inset 0 2px 10px rgba(8, 4, 12, 0.55);
+  --shadow-glow: 0 12px 28px -10px rgba(255, 103, 164, 0.5),
+    0 0 0 1px rgba(255, 103, 164, 0.14);
+  --shadow-glow-warm: 0 12px 28px -10px rgba(255, 164, 119, 0.45),
+    0 0 0 1px rgba(255, 164, 119, 0.14);
+  --shadow-glow-extra: 0 12px 28px -10px rgba(255, 212, 71, 0.4),
+    0 0 0 1px rgba(255, 212, 71, 0.16);
+  --shadow-glow-wine: 0 12px 28px -10px rgba(142, 55, 90, 0.55),
+    0 0 0 1px rgba(142, 55, 90, 0.35);
+  --shadow-glow-success: 0 12px 28px -10px rgba(88, 211, 142, 0.4),
+    0 0 0 1px rgba(88, 211, 142, 0.18);
+  --shadow-glow-info: 0 12px 28px -10px rgba(69, 117, 239, 0.4),
+    0 0 0 1px rgba(69, 117, 239, 0.2);
+  --shadow-glow-live: 0 14px 32px -10px rgba(255, 212, 71, 0.35),
+    0 8px 20px -12px rgba(142, 55, 90, 0.55);
+  --shadow-card: 0 10px 28px -12px rgba(8, 4, 12, 0.7),
+    inset 0 1px 0 rgba(245, 238, 244, 0.05);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 10px 24px -10px rgba(0, 0, 0, 0.55), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 28px 48px -18px rgba(0, 0, 0, 0.65),
+    0 8px 16px -8px rgba(0, 0, 0, 0.4);
+  --shadow-pop: 0 16px 36px -10px rgba(0, 0, 0, 0.6),
+    0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(245, 238, 244, 0.06);
+  --shadow-lift: 0 18px 40px -16px rgba(8, 4, 12, 0.85),
+    inset 0 1px 0 rgba(245, 238, 244, 0.07);
+}
+
+@utility gradient-cosmic {
+  background-image: var(--gradient-cosmic);
+}
+@utility gradient-dusk {
+  background-image: var(--gradient-dusk);
+}
+@utility gradient-ember {
+  background-image: var(--gradient-ember);
+}
+@utility gradient-sequence {
+  background-image: var(--gradient-sequence);
+}
+@utility gradient-live {
+  background-image: var(--gradient-live);
+}
+@utility gradient-room {
+  background-image: var(--gradient-room);
+}
+@utility gradient-aurora {
+  background-image: var(--gradient-aurora);
+}
+@utility gradient-sheen {
+  background-image: var(--gradient-sheen);
+}
+@utility gradient-void {
+  background-image: var(--gradient-void);
+}
+@utility gradient-radial {
+  background-image: var(--gradient-radial);
+}
+@utility gradient-glow {
+  background-image: var(--gradient-glow);
+}
+@utility transition-smooth {
+  transition: var(--transition-smooth);
+}
+@utility sheen {
+  background-image: var(--gradient-sheen);
+}
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.86);
+  }
+}
+@utility animate-live {
+  animation: live-pulse 1.6s ease-in-out infinite;
+}

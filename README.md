@@ -6,6 +6,8 @@
 
 **Para la comunidad Zeew Space:** si das clases, mentoreás o entregás TPs, este es tu atajo. Un mismo checklist, un mismo puntaje, un mismo idioma.
 
+> **¿No sabés de qué trata?** Abrí la página con glosario y datos: [`site/index.html`](./site/index.html) — usa el [design-system de Zeew Space](../../learning/design-system) (`tokens.css` cósmico, shadcn/ui).
+
 ---
 
 ## ¿Para quién es?
