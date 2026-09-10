@@ -5,8 +5,8 @@
 //   node ./scripts/edu-score.mjs --quick  # indicación semáforo (local rápido)
 //   node ./scripts/edu-score.mjs --deductions path.json   # con deducciones
 //   node ./scripts/edu-score.mjs --out custom.json        # custom out
-//   node ./scripts/edu-score.mjs --history                # append a .crisol/history/history.ndjson
-// Default: full 0-10; --quick para semáforo. Out -> .crisol/results/edu-score.json (gitignored)
+//   node ./scripts/edu-score.mjs --no-history             # no guarda history (por defecto en full sí)
+// Default: full 0-10 + history; --quick para semáforo. Out -> .crisol/results/edu-score.json (gitignored)
 
 import { writeFileSync, readFileSync, existsSync, mkdirSync, appendFileSync } from "node:fs";
 import { dirname } from "node:path";
@@ -23,7 +23,8 @@ const outPath = getArg("--out", ".crisol/results/edu-score.json");
 const hasQuick = has("--quick");
 const hasFull = has("--full");
 const fullMode = hasQuick ? false : true; // /edu full por defecto, --quick para indicación
-const historyFlag = getArg("--history", has("--history") ? ".crisol/history/history.ndjson" : null);
+const hasNoHistory = has("--no-history");
+const historyFlag = getArg("--history", has("--history") ? ".crisol/history/history.ndjson" : (fullMode && !hasNoHistory ? ".crisol/history/history.ndjson" : null));
 
 let deductions = [];
 if (deductionsPath && existsSync(deductionsPath)) {
